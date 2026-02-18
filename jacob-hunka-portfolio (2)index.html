@@ -1,0 +1,1425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jacob Hunka — Product Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Syne:wght@400;600;700;800&family=Space+Mono:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --forest: #0f1e2e;
+    --moss: #1a3047;
+    --sage: #2e6a9e;
+    --electric: #5bc8f5;
+    --amber: #c8a96e;
+    --parchment: #f0f4f8;
+    --warm-white: #f5f9fc;
+    --deep: #080f1a;
+    --mid: #152234;
+    --text: #1a2a3a;
+    --text-light: #3a5060;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background-color: var(--forest);
+    color: var(--parchment);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ── NOISE TEXTURE OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.3;
+  }
+
+  /* ── NAVIGATION ── */
+  nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 100;
+    padding: 1.2rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(to bottom, rgba(13,26,16,0.95), transparent);
+  }
+
+  .nav-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--electric);
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--parchment);
+    text-decoration: none;
+    opacity: 0.7;
+    transition: opacity 0.3s, color 0.3s;
+  }
+
+  .nav-links a:hover { opacity: 1; color: var(--electric); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 8rem 4rem 4rem 6rem;
+    position: relative;
+    z-index: 2;
+  }
+
+  .hero-eyebrow {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--electric);
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 1s 0.3s forwards;
+  }
+
+  .hero-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3.5rem, 6vw, 5.5rem);
+    font-weight: 300;
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    color: var(--warm-white);
+    opacity: 0;
+    animation: fadeUp 1s 0.5s forwards;
+  }
+
+  .hero-name em {
+    font-style: italic;
+    color: var(--amber);
+  }
+
+  .hero-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 600;
+    font-size: 0.85rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--sage);
+    margin-top: 1.5rem;
+    margin-bottom: 2rem;
+    opacity: 0;
+    animation: fadeUp 1s 0.7s forwards;
+  }
+
+  .hero-tagline {
+    font-size: 1.25rem;
+    font-weight: 300;
+    color: var(--parchment);
+    opacity: 0;
+    animation: fadeUp 1s 0.9s forwards;
+    max-width: 420px;
+    line-height: 1.8;
+  }
+
+  .hero-tagline strong {
+    font-weight: 600;
+    color: var(--electric);
+  }
+
+  .hero-cta {
+    display: flex;
+    gap: 1rem;
+    margin-top: 3rem;
+    opacity: 0;
+    animation: fadeUp 1s 1.1s forwards;
+  }
+
+  .btn-primary {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 1rem 2rem;
+    background: var(--electric);
+    color: var(--deep);
+    text-decoration: none;
+    font-weight: 700;
+    transition: background 0.3s, transform 0.2s;
+  }
+
+  .btn-primary:hover { background: #8ddeff; transform: translateY(-2px); }
+
+  .btn-secondary {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 1rem 2rem;
+    border: 1px solid var(--sage);
+    color: var(--parchment);
+    text-decoration: none;
+    transition: border-color 0.3s, color 0.3s;
+  }
+
+  .btn-secondary:hover { border-color: var(--electric); color: var(--electric); }
+
+  /* ── HERO RIGHT — animated orb ── */
+  .hero-right {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .orb-container {
+    position: relative;
+    width: 480px;
+    height: 480px;
+    opacity: 0;
+    animation: fadeIn 2s 1s forwards;
+  }
+
+  .orb {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%,
+      rgba(91,200,245,0.15) 0%,
+      rgba(46,106,158,0.08) 40%,
+      transparent 70%);
+    border: 1px solid rgba(91,200,245,0.2);
+    animation: pulse 6s ease-in-out infinite;
+  }
+
+  .orb-ring {
+    position: absolute;
+    border-radius: 50%;
+    border: 1px solid rgba(91,200,245,0.08);
+    animation: rotate 20s linear infinite;
+  }
+
+  .orb-ring:nth-child(2) {
+    inset: -40px;
+    animation-duration: 25s;
+    animation-direction: reverse;
+  }
+
+  .orb-ring:nth-child(3) {
+    inset: -80px;
+    animation-duration: 35s;
+  }
+
+  .orb-inner {
+    position: absolute;
+    inset: 60px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 40% 35%,
+      rgba(200,169,110,0.12),
+      transparent 60%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .orb-text {
+    text-align: center;
+    padding: 2rem;
+  }
+
+  .orb-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.1rem;
+    color: var(--amber);
+    line-height: 1.7;
+  }
+
+  .orb-attr {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--sage);
+    margin-top: 0.75rem;
+  }
+
+  /* ── RIVIAN BANNER ── */
+  .rivian-banner {
+    background: linear-gradient(135deg, var(--deep) 0%, var(--moss) 100%);
+    padding: 2rem 6rem;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    border-top: 1px solid rgba(91,200,245,0.15);
+    border-bottom: 1px solid rgba(91,200,245,0.15);
+  }
+
+  .banner-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--electric);
+    animation: blink 2s ease-in-out infinite;
+    flex-shrink: 0;
+  }
+
+  .banner-text {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--electric);
+  }
+
+  .banner-divider {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, rgba(91,200,245,0.3), transparent);
+  }
+
+  .banner-detail {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1rem;
+    color: var(--amber);
+  }
+
+  /* ── SECTIONS ── */
+  section {
+    padding: 7rem 6rem;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 4rem;
+  }
+
+  .section-number {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--electric);
+    letter-spacing: 0.2em;
+  }
+
+  .section-line {
+    flex: 0 0 60px;
+    height: 1px;
+    background: var(--sage);
+  }
+
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.8rem;
+    font-weight: 300;
+    color: var(--warm-white);
+    letter-spacing: -0.01em;
+  }
+
+  .section-title em { font-style: italic; color: var(--amber); }
+
+  /* ── ABOUT ── */
+  .about {
+    background: var(--deep);
+  }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 5rem;
+    align-items: start;
+  }
+
+  .about-body p {
+    font-size: 1.15rem;
+    color: var(--parchment);
+    opacity: 0.9;
+    margin-bottom: 1.5rem;
+    line-height: 1.9;
+  }
+
+  .about-body p strong { color: var(--electric); font-weight: 600; }
+  .about-body p em { color: var(--amber); font-style: italic; }
+
+  .about-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding-top: 1rem;
+  }
+
+  .stat-card {
+    border: 1px solid rgba(91,200,245,0.15);
+    padding: 1.5rem;
+    background: rgba(91,200,245,0.03);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px;
+    height: 100%;
+    background: var(--electric);
+  }
+
+  .stat-value {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 2.2rem;
+    color: var(--electric);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--sage);
+    margin-top: 0.4rem;
+  }
+
+  .stat-sub {
+    font-size: 0.95rem;
+    color: var(--parchment);
+    opacity: 0.6;
+    margin-top: 0.4rem;
+  }
+
+  /* ── WHY RIVIAN ── */
+  .rivian-section {
+    background: var(--forest);
+  }
+
+  .rivian-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin-top: 1rem;
+  }
+
+  .rivian-card {
+    padding: 2.5rem 2rem;
+    border: 1px solid rgba(91,200,245,0.12);
+    background: linear-gradient(135deg, rgba(91,200,245,0.03), transparent);
+    transition: border-color 0.4s, transform 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .rivian-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(to right, var(--electric), transparent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s;
+  }
+
+  .rivian-card:hover { border-color: rgba(91,200,245,0.35); transform: translateY(-4px); }
+  .rivian-card:hover::after { transform: scaleX(1); }
+
+  .card-icon {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+  }
+
+  .card-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--electric);
+    margin-bottom: 0.75rem;
+  }
+
+  .card-body {
+    font-size: 1rem;
+    color: var(--parchment);
+    opacity: 0.8;
+    line-height: 1.8;
+  }
+
+  /* ── EXPERIENCE ── */
+  .experience {
+    background: var(--deep);
+  }
+
+  .timeline {
+    position: relative;
+    padding-left: 2.5rem;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.5rem;
+    bottom: 0.5rem;
+    width: 1px;
+    background: linear-gradient(to bottom, var(--electric), var(--sage), transparent);
+  }
+
+  .timeline-item {
+    position: relative;
+    margin-bottom: 3.5rem;
+    padding-bottom: 3.5rem;
+    border-bottom: 1px solid rgba(91,200,245,0.08);
+  }
+
+  .timeline-item:last-child { border-bottom: none; margin-bottom: 0; }
+
+  .timeline-dot {
+    position: absolute;
+    left: -2.5rem;
+    top: 0.6rem;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--electric);
+    transform: translateX(calc(-50% + 0.5px));
+    box-shadow: 0 0 12px rgba(91,200,245,0.5);
+  }
+
+  .job-period {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--electric);
+    margin-bottom: 0.5rem;
+  }
+
+  .job-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: var(--warm-white);
+  }
+
+  .job-company {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 1.25rem;
+    margin-top: 0.15rem;
+  }
+
+  .job-bullets {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .job-bullets li {
+    font-size: 1rem;
+    color: var(--parchment);
+    opacity: 0.8;
+    line-height: 1.7;
+    padding-left: 1.25rem;
+    position: relative;
+  }
+
+  .job-bullets li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--electric);
+    font-size: 0.8rem;
+  }
+
+  /* ── INTERESTS / HUMAN SIDE ── */
+  .interests {
+    background: var(--forest);
+  }
+
+  .interests-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  .interest-group {
+    margin-bottom: 3rem;
+  }
+
+  .interest-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--electric);
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(91,200,245,0.15);
+  }
+
+  .interest-text {
+    font-size: 1.05rem;
+    color: var(--parchment);
+    opacity: 0.85;
+    line-height: 1.85;
+  }
+
+  .tag-cloud {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+  }
+
+  .tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.1em;
+    padding: 0.3rem 0.75rem;
+    border: 1px solid rgba(91,200,245,0.25);
+    color: var(--sage);
+    text-transform: uppercase;
+  }
+
+  /* ── CONTACT ── */
+  .contact {
+    background: var(--deep);
+    text-align: center;
+    padding: 8rem 6rem;
+  }
+
+  .contact-headline {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    font-weight: 300;
+    color: var(--warm-white);
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+  }
+
+  .contact-headline em { font-style: italic; color: var(--electric); }
+
+  .contact-sub {
+    font-size: 1.1rem;
+    color: var(--parchment);
+    opacity: 0.7;
+    max-width: 500px;
+    margin: 0 auto 3rem;
+    line-height: 1.8;
+  }
+
+  .contact-links {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 5rem;
+  }
+
+  .contact-link {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--parchment);
+    text-decoration: none;
+    padding: 0.75rem 1.5rem;
+    border: 1px solid rgba(200,169,110,0.4);
+    transition: all 0.3s;
+  }
+
+  .contact-link:hover {
+    border-color: var(--amber);
+    color: var(--amber);
+    transform: translateY(-2px);
+  }
+
+  .footer-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1rem;
+    color: var(--parchment);
+    opacity: 0.35;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50%       { transform: scale(1.04); opacity: 0.85; }
+  }
+
+  @keyframes rotate {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0.3; }
+  }
+
+  /* scroll reveal disabled */
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .hero { grid-template-columns: 1fr; }
+    .hero-right { display: none; }
+    .hero-left { padding: 8rem 2rem 4rem; }
+    section { padding: 5rem 2rem; }
+    .rivian-banner { padding: 1.5rem 2rem; }
+    .about-grid { grid-template-columns: 1fr; }
+    .rivian-grid { grid-template-columns: 1fr; }
+    .interests-layout { grid-template-columns: 1fr; }
+    .contact { padding: 5rem 2rem; }
+  }
+  /* ── GAME ── */
+  .game-section {
+    background: var(--deep);
+    padding: 7rem 6rem;
+  }
+
+  .game-wrapper {
+    position: relative;
+    max-width: 800px;
+    margin: 0 auto;
+    border: 1px solid rgba(91,200,245,0.2);
+    background: #060d14;
+  }
+
+  #gameCanvas {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .game-ui {
+    display: flex;
+    align-items: center;
+    gap: 2.5rem;
+    padding: 1rem 1.5rem;
+    background: rgba(91,200,245,0.04);
+    border-top: 1px solid rgba(91,200,245,0.12);
+  }
+
+  .game-stat {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .game-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.2em;
+    color: var(--sage);
+    text-transform: uppercase;
+  }
+
+  .game-value {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--electric);
+    min-width: 3ch;
+  }
+
+  .battery-bar {
+    width: 120px;
+    height: 10px;
+    border: 1px solid rgba(91,200,245,0.3);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .battery-fill {
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(to right, var(--electric), #2af);
+    transition: width 0.3s, background 0.3s;
+    border-radius: 2px;
+  }
+
+  .game-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(6,13,20,0.88);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(2px);
+  }
+
+  .overlay-content { text-align: center; }
+
+  .overlay-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.5rem;
+    font-weight: 300;
+    color: var(--warm-white);
+    margin-bottom: 0.5rem;
+  }
+
+  .overlay-msg {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    color: var(--parchment);
+    opacity: 0.6;
+    margin-bottom: 2rem;
+    line-height: 1.8;
+  }
+
+  .game-btn {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 0.9rem 2.5rem;
+    background: var(--electric);
+    color: var(--deep);
+    border: none;
+    cursor: pointer;
+    font-weight: 700;
+    transition: background 0.2s, transform 0.2s;
+  }
+
+  .game-btn:hover { background: #8ddeff; transform: translateY(-2px); }
+
+  @media (max-width: 900px) {
+    .game-section { padding: 5rem 1.5rem; }
+    .battery-bar { width: 70px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Jacob Hunka</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#rivian">Why Rivian</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#interests">Beyond Work</a></li>
+    <li><a href="#game">Play</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow">Aspiring Product Guide III · Rivian Louisville</div>
+    <h1 class="hero-name">Jacob<br><em>Hunka</em></h1>
+    <div class="hero-title">Customer Experience Leader · EV Enthusiast · Autodidact</div>
+    <p class="hero-tagline">
+      A person who <strong>knows the vehicles</strong>, enjoys working with people, and genuinely believes we're headed toward a cleaner, electric future.
+    </p>
+    <div class="hero-cta">
+      <a href="#rivian" class="btn-primary">Why Rivian?</a>
+      <a href="#contact" class="btn-secondary">Get In Touch</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="orb-container">
+      <div class="orb">
+        <div class="orb-ring"></div>
+        <div class="orb-ring"></div>
+        <div class="orb-ring"></div>
+        <div class="orb-inner">
+          <div class="orb-text">
+            <div class="orb-quote">"The sun propels my truck.<br>That's the Sci-Fi I wanted<br>since I was a child."</div>
+            <div class="orb-attr">— Jacob Hunka · R1T Owner · VIN &lt;7,000</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RIVIAN BANNER -->
+<div class="rivian-banner">
+  <div class="banner-dot"></div>
+  <div class="banner-text">Original R1T Owner &nbsp;·&nbsp; VIN #&lt;7,000 &nbsp;·&nbsp; R2 Reservation Holder</div>
+  <div class="banner-divider"></div>
+  <div class="banner-detail">This isn't a job application. It's a homecoming.</div>
+</div>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="section-header reveal">
+    <span class="section-number">01</span>
+    <div class="section-line"></div>
+    <h2 class="section-title">The <em>Human</em> Behind the Résumé</h2>
+  </div>
+  <div class="about-grid">
+    <div class="about-body reveal">
+      <p>
+        I'm the person friends call before buying a car. I explain trim levels, walk through negotiation strategy, and make sure they feel confident — not sold to. I've done this informally for years. The <strong>Product Guide role</strong> is simply that, made professional.
+      </p>
+      <p>
+        My career has always orbited one core belief: <em>people perform best when they feel safe, seen, and genuinely supported</em>. I've led teams of 31, managed a busy restaurant floor at midnight, and taught English to students in Taipei who didn't yet speak my language. Every role demanded the same skill: <strong>reading the room and meeting people where they are</strong>.
+      </p>
+      <p>
+        I'm at a point in life where I can chase <em>passion over paycheck</em>. Rivian is that passion. I've believed in this company since I took delivery of one of the first 7,000 R1Ts. I'm not arriving to learn about the mission — I've been living it.
+      </p>
+      <p>
+        I'm kind. I work hard. I'm endlessly curious — an <strong>autodidact</strong> who reads widely, travels eagerly, and finds genuine joy in learning something new from the person in front of me.
+      </p>
+    </div>
+    <div class="about-sidebar reveal">
+      <div class="stat-card">
+        <div class="stat-value">95–97%</div>
+        <div class="stat-label">CSAT Score Maintained</div>
+        <div class="stat-sub">Industry-leading average at Sticker Mule across a 31-person team</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">5+</div>
+        <div class="stat-label">Years Leading Support Teams</div>
+        <div class="stat-sub">From individual contributor to Assistant Manager</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">3</div>
+        <div class="stat-label">Continents Lived & Worked</div>
+        <div class="stat-sub">Prague · Taipei · Buenos Aires · Erie, CO</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">1kW</div>
+        <div class="stat-label">Home Solar System</div>
+        <div class="stat-sub">Charges the truck. The sun moves the vehicle. Clarke would approve.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY RIVIAN -->
+<section class="rivian-section" id="rivian">
+  <div class="section-header reveal">
+    <span class="section-number">02</span>
+    <div class="section-line"></div>
+    <h2 class="section-title">Why <em>Rivian</em></h2>
+  </div>
+  <div class="rivian-grid">
+    <div class="rivian-card reveal">
+      <div class="card-icon">🌿</div>
+      <div class="card-title">Mission Alignment</div>
+      <p class="card-body">RJ Scaringe has been clear about what Rivian is trying to solve — that vehicles sit at the center of so many of the planet's challenges, and that tension between loving the outdoors and contributing to its degradation is what drove him to start the company. I connect with that premise deeply. Rivian's focus on reducing the impact of getting there — without sacrificing capability — aligns with how I think about adventure, responsibility, and building long-term customer trust.</p>
+    </div>
+    <div class="rivian-card reveal">
+      <div class="card-icon">⚡</div>
+      <div class="card-title">The Living Vehicle</div>
+      <p class="card-body">A vehicle that improves over time through software is genuinely thrilling. The auto industry is becoming a software industry — and I've been tracking that convergence with real enthusiasm, not just professional interest.</p>
+    </div>
+    <div class="rivian-card reveal">
+      <div class="card-icon">☀️</div>
+      <div class="card-title">Sun-Powered Living</div>
+      <p class="card-body">My home has solar. My truck runs on it. When I tell a customer that their vehicle can be charged by sunlight, I'm not reciting a feature — I'm sharing something I experience every single day.</p>
+    </div>
+    <div class="rivian-card reveal">
+      <div class="card-icon">🤝</div>
+      <div class="card-title">People-First Culture</div>
+      <p class="card-body">Rivian's commitment to diversity and being genuinely good people isn't a talking point to me — it's a filter. Creating environments where everyone feels welcome and can be themselves has been central to how I've led every team.</p>
+    </div>
+    <div class="rivian-card reveal">
+      <div class="card-icon">🚙</div>
+      <div class="card-title">Actual Ownership</div>
+      <p class="card-body">I'm not a candidate who researched the brand for an interview. I'm one of the first 7,000 R1T owners. I have an R2 reservation. I know the product from the inside — the excitement, the quirks, the loyalty it builds.</p>
+    </div>
+    <div class="rivian-card reveal">
+      <div class="card-icon">🔭</div>
+      <div class="card-title">The Long View</div>
+      <p class="card-body">A lifetime of reading Clarke and Asimov has given me a genuine appreciation for the long arc of technology. Electrification isn't a trend — it's the direction. I want to be part of the team helping people step into that future with confidence.</p>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section class="experience" id="experience">
+  <div class="section-header reveal">
+    <span class="section-number">03</span>
+    <div class="section-line"></div>
+    <h2 class="section-title"><em>Experience</em></h2>
+  </div>
+  <div class="timeline">
+
+    <div class="timeline-item reveal">
+      <div class="timeline-dot"></div>
+      <div class="job-period">Sep 2020 — Jun 2025</div>
+      <div class="job-title">Customer Support Assistant Manager</div>
+      <div class="job-company">Sticker Mule · Boulder, CO</div>
+      <ul class="job-bullets">
+        <li>Led a team of 31 support representatives including 5 team leads — building a culture of collaboration, psychological safety, and consistently high performance.</li>
+        <li>Maintained an industry-leading CSAT of 95–97% by embedding a genuinely customer-first approach across all interactions.</li>
+        <li>Managed VIP accounts and complex escalations with calm, solution-oriented communication — the same skillset that turns a nervous first-time EV buyer into a lifelong advocate.</li>
+        <li>Collaborated directly with product teams to translate customer pain points into actionable improvements — bridging the gap between user experience and product development.</li>
+        <li>Engaged C-level executives to align support strategy with broader business goals.</li>
+      </ul>
+    </div>
+
+    <div class="timeline-item reveal">
+      <div class="timeline-dot"></div>
+      <div class="job-period">Nov 2013 — Mar 2020</div>
+      <div class="job-title">Assistant General Manager</div>
+      <div class="job-company">Jax Fish House · Boulder, CO</div>
+      <ul class="job-bullets">
+        <li>Oversaw 25-person front-of-house staff — hiring, training, scheduling, and developing people who felt invested in the experience they delivered.</li>
+        <li>Drove 6% year-over-year sales growth through team development and metrics-focused leadership.</li>
+        <li>Earned Level 1 Sommelier certification — a testament to genuine curiosity and the discipline to develop deep product knowledge.</li>
+      </ul>
+    </div>
+
+    <div class="timeline-item reveal">
+      <div class="timeline-dot"></div>
+      <div class="job-period">Oct 2009 — Jun 2010</div>
+      <div class="job-title">First Mate, Yacht Racing</div>
+      <div class="job-company">OnDeck Ocean Racing · St. Thomas, USVI</div>
+      <ul class="job-bullets">
+        <li>Taught guests yacht racing fundamentals while managing on-water safety and entertainment — high-stakes guest experience under real pressure.</li>
+      </ul>
+    </div>
+
+    <div class="timeline-item reveal">
+      <div class="timeline-dot"></div>
+      <div class="job-period">Jul 2007 — Jul 2008</div>
+      <div class="job-title">ESL Teacher</div>
+      <div class="job-company">WeGo Private School · Taipei, Taiwan</div>
+      <ul class="job-bullets">
+        <li>Taught English to students across varying proficiency levels — adapting communication for clarity, patience, and genuine connection across a language barrier.</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<!-- INTERESTS -->
+<section class="interests" id="interests">
+  <div class="section-header reveal">
+    <span class="section-number">04</span>
+    <div class="section-line"></div>
+    <h2 class="section-title">Beyond the <em>Résumé</em></h2>
+  </div>
+  <div class="interests-layout">
+    <div>
+      <div class="interest-group reveal">
+        <div class="interest-label">The Car Guy</div>
+        <p class="interest-text">
+          In my friend group, I'm the first call before anyone buys a vehicle. What to look for, how to negotiate, which trim is actually worth it. It's never felt like expertise — just genuine enthusiasm. The Product Guide role is the first time a job description has matched how I've always naturally operated.
+        </p>
+      </div>
+      <div class="interest-group reveal">
+        <div class="interest-label">Renewable Energy</div>
+        <p class="interest-text">
+          My Colorado home runs a 1kW solar system. The truck charges from it. Solar and wind aren't abstract policy positions — they're part of my daily life. When I talk to a customer about charging infrastructure and energy independence, I'm speaking from lived experience.
+        </p>
+      </div>
+      <div class="interest-group reveal">
+        <div class="interest-label">The World, On Foot</div>
+        <p class="interest-text">
+          I've lived in Prague, taught in Taipei, biked through Argentina and Chile, sailed in the USVI, and studied in Pella, Italy. Travel taught me more about reading people, adapting quickly, and finding common ground than any training program.
+        </p>
+        <div class="tag-cloud">
+          <span class="tag">Czech Republic</span>
+          <span class="tag">Taiwan</span>
+          <span class="tag">Argentina</span>
+          <span class="tag">Chile</span>
+          <span class="tag">Italy</span>
+          <span class="tag">USVI</span>
+          <span class="tag">Colorado</span>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="interest-group reveal">
+        <div class="interest-label">The Reading Life</div>
+        <p class="interest-text">
+          B.A. in English Literature. Lifelong reader across genres — the grandfathers of Sci-Fi (Clarke, Asimov), modern space opera (Reynolds, Tchaikovsky), epic fantasy (Tolkien, Sanderson), and the classics (Shakespeare, Milton, Dune). Reading widely makes you a better thinker, communicator, and — frankly — a better person to talk to.
+        </p>
+        <div class="tag-cloud">
+          <span class="tag">Clarke</span>
+          <span class="tag">Asimov</span>
+          <span class="tag">Tolkien</span>
+          <span class="tag">Dune</span>
+          <span class="tag">Red Rising</span>
+          <span class="tag">Ender's Game</span>
+          <span class="tag">Shakespeare</span>
+          <span class="tag">Milton</span>
+        </div>
+      </div>
+      <div class="interest-group reveal">
+        <div class="interest-label">Audiophile & Cinephile</div>
+        <p class="interest-text">
+          I built a 5.1.2 Klipsch home theater in my basement. Sound matters. Presentation matters. The details that most people don't notice are exactly the ones worth getting right — a philosophy that applies equally to audio systems and customer experiences.
+        </p>
+      </div>
+      <div class="interest-group reveal">
+        <div class="interest-label">Climber & Hiker</div>
+        <p class="interest-text">
+          Living in Colorado means the mountains aren't a backdrop — they're a regular destination. Climbing and hiking keep me grounded (literally and otherwise) and remind me regularly why protecting wild places matters. Rivian's mission feels personal because the adventure it enables is personal.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GAME -->
+<section class="game-section" id="game">
+  <div class="section-header reveal">
+    <span class="section-number">05</span>
+    <div class="section-line"></div>
+    <h2 class="section-title">Take the <em>R1T</em> for a Run</h2>
+  </div>
+  <p style="font-size:1rem; color:var(--parchment); opacity:0.6; margin-bottom:2rem; font-family:'Space Mono',monospace; font-size:0.7rem; letter-spacing:0.1em;">ARROW KEYS or WASD to move · Dodge obstacles · Collect solar ⚡ to boost range</p>
+  <div class="game-wrapper">
+    <canvas id="gameCanvas" width="800" height="300"></canvas>
+    <div class="game-ui">
+      <div class="game-stat">
+        <span class="game-label">RANGE</span>
+        <div class="battery-bar"><div id="batteryFill" class="battery-fill"></div></div>
+      </div>
+      <div class="game-stat">
+        <span class="game-label">SCORE</span>
+        <span id="scoreDisplay" class="game-value">0</span>
+      </div>
+      <div class="game-stat">
+        <span class="game-label">HI-SCORE</span>
+        <span id="hiScoreDisplay" class="game-value">0</span>
+      </div>
+    </div>
+    <div id="gameOverlay" class="game-overlay">
+      <div class="overlay-content">
+        <div id="overlayTitle" class="overlay-title">R1T Road Trip</div>
+        <div id="overlayMsg" class="overlay-msg">Dodge traffic. Collect solar charges. How far can you go?</div>
+        <button id="startBtn" class="game-btn">START ENGINE</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <h2 class="contact-headline reveal">Let's talk about<br><em>what comes next.</em></h2>
+  <p class="contact-sub reveal">
+    I'd love to connect with the Rivian Louisville team. Coffee, a call, or a test drive — I'm in.
+  </p>
+  <div class="contact-links reveal">
+    <a href="https://www.linkedin.com/in/jacobhunka85" class="contact-link" target="_blank">LinkedIn</a>
+  </div>
+  <div class="footer-quote reveal">
+    "Two possibilities exist: either we are alone in the Universe<br>or we are not. Both are equally terrifying."<br>— Arthur C. Clarke
+  </div>
+</section>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  // Scroll reveal (disabled - all visible)
+  const reveals = document.querySelectorAll('.reveal');
+  reveals.forEach(el => el.classList.add('visible'));
+
+  // ── EV ROAD TRIP GAME ──
+  const canvas = document.getElementById('gameCanvas');
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+
+  let gameRunning = false, animFrame;
+  let score = 0, hiScore = 0, battery = 100;
+  let speed = 3, frame = 0;
+
+  let roadLines = [0,1,2,3].map(i => ({ x: i * 200, y: H/2 }));
+
+  const truck = { x: 120, y: H/2, w: 64, h: 30, vy: 0, lane: 1 };
+  const LANES = [H*0.28, H*0.5, H*0.72];
+
+  let obstacles = [], pickups = [];
+
+  const keys = {};
+  document.addEventListener('keydown', e => {
+    keys[e.key] = true;
+    if (['ArrowUp','ArrowDown','w','s'].includes(e.key)) e.preventDefault();
+  });
+  document.addEventListener('keyup', e => keys[e.key] = false);
+
+  let lastLaneMove = 0;
+
+  function spawnObstacle() {
+    const lane = Math.floor(Math.random() * 3);
+    obstacles.push({ x: W + 60, y: LANES[lane], w: 52, h: 26, lane });
+  }
+
+  function spawnPickup() {
+    const lane = Math.floor(Math.random() * 3);
+    pickups.push({ x: W + 30, y: LANES[lane], r: 14, lane });
+  }
+
+  function drawBackground() {
+    const sky = ctx.createLinearGradient(0, 0, 0, H);
+    sky.addColorStop(0, '#060d14');
+    sky.addColorStop(1, '#0a1a28');
+    ctx.fillStyle = sky;
+    ctx.fillRect(0, 0, W, H);
+
+    ctx.fillStyle = 'rgba(255,255,255,0.5)';
+    [[40,20],[120,35],[200,15],[350,40],[500,20],[650,10],[720,38],[780,25]].forEach(([x,y]) => {
+      ctx.fillRect(x, y, 1.5, 1.5);
+    });
+
+    const road = ctx.createLinearGradient(0, H*0.15, 0, H*0.85);
+    road.addColorStop(0, '#0d1f10');
+    road.addColorStop(0.5, '#111f13');
+    road.addColorStop(1, '#0d1f10');
+    ctx.fillStyle = road;
+    ctx.fillRect(0, H*0.15, W, H*0.7);
+
+    ctx.strokeStyle = 'rgba(91,200,245,0.3)';
+    ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(0, H*0.15); ctx.lineTo(W, H*0.15); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(0, H*0.85); ctx.lineTo(W, H*0.85); ctx.stroke();
+
+    ctx.setLineDash([30, 20]);
+    ctx.strokeStyle = 'rgba(91,200,245,0.15)';
+    ctx.lineWidth = 1.5;
+    [H*0.383, H*0.617].forEach(ly => {
+      ctx.beginPath(); ctx.moveTo(0, ly); ctx.lineTo(W, ly); ctx.stroke();
+    });
+    ctx.setLineDash([]);
+
+    roadLines.forEach(l => {
+      ctx.fillStyle = 'rgba(91,200,245,0.05)';
+      ctx.fillRect(l.x, H*0.15, 3, H*0.7);
+    });
+  }
+
+  function drawTruck(x, y) {
+    ctx.save();
+    ctx.fillStyle = '#5bc8f5';
+    ctx.beginPath();
+    ctx.roundRect(x - truck.w/2, y - truck.h/2, truck.w, truck.h, 4);
+    ctx.fill();
+    ctx.fillStyle = '#c8a96e';
+    ctx.beginPath();
+    ctx.roundRect(x - truck.w/2 + truck.w*0.45, y - truck.h/2, truck.w*0.45, truck.h*0.75, 3);
+    ctx.fill();
+    ctx.fillStyle = 'rgba(6,13,20,0.7)';
+    ctx.fillRect(x - truck.w/2 + truck.w*0.5, y - truck.h/2 + 3, truck.w*0.3, truck.h*0.45);
+    ctx.fillStyle = '#1a1a2e';
+    [[-truck.w*0.28, truck.h*0.42],[truck.w*0.28, truck.h*0.42]].forEach(([dx,dy]) => {
+      ctx.beginPath();
+      ctx.ellipse(x+dx, y+dy, 10, 6, 0, 0, Math.PI*2);
+      ctx.fill();
+      ctx.strokeStyle = 'rgba(91,200,245,0.4)';
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+    });
+    ctx.fillStyle = 'rgba(255,240,180,0.9)';
+    ctx.beginPath(); ctx.ellipse(x + truck.w/2, y - 6, 4, 3, 0, 0, Math.PI*2); ctx.fill();
+    ctx.beginPath(); ctx.ellipse(x + truck.w/2, y + 6, 4, 3, 0, 0, Math.PI*2); ctx.fill();
+    const beam = ctx.createLinearGradient(x+truck.w/2, y, x+truck.w/2+60, y);
+    beam.addColorStop(0, 'rgba(255,240,180,0.12)');
+    beam.addColorStop(1, 'rgba(255,240,180,0)');
+    ctx.fillStyle = beam;
+    ctx.beginPath();
+    ctx.moveTo(x+truck.w/2, y-8);
+    ctx.lineTo(x+truck.w/2+70, y-20);
+    ctx.lineTo(x+truck.w/2+70, y+20);
+    ctx.lineTo(x+truck.w/2, y+8);
+    ctx.fill();
+    ctx.restore();
+  }
+
+  function drawObstacle(o) {
+    ctx.save();
+    ctx.fillStyle = '#8b2020';
+    ctx.beginPath();
+    ctx.roundRect(o.x - o.w/2, o.y - o.h/2, o.w, o.h, 3);
+    ctx.fill();
+    ctx.fillStyle = '#5a1010';
+    ctx.beginPath();
+    ctx.roundRect(o.x - o.w/2 + 4, o.y - o.h/2, o.w*0.5, o.h*0.7, 2);
+    ctx.fill();
+    ctx.fillStyle = '#1a1a1a';
+    [[-o.w*0.28, o.h*0.42],[o.w*0.28, o.h*0.42]].forEach(([dx,dy]) => {
+      ctx.beginPath();
+      ctx.ellipse(o.x+dx, o.y+dy, 8, 5, 0, 0, Math.PI*2);
+      ctx.fill();
+    });
+    ctx.fillStyle = 'rgba(255,60,60,0.9)';
+    ctx.beginPath(); ctx.ellipse(o.x - o.w/2, o.y - 5, 3, 2, 0, 0, Math.PI*2); ctx.fill();
+    ctx.beginPath(); ctx.ellipse(o.x - o.w/2, o.y + 5, 3, 2, 0, 0, Math.PI*2); ctx.fill();
+    ctx.restore();
+  }
+
+  function drawPickup(p) {
+    ctx.save();
+    const grd = ctx.createRadialGradient(p.x, p.y, 2, p.x, p.y, p.r);
+    grd.addColorStop(0, 'rgba(255,220,80,0.9)');
+    grd.addColorStop(0.5, 'rgba(91,200,245,0.4)');
+    grd.addColorStop(1, 'rgba(91,200,245,0)');
+    ctx.fillStyle = grd;
+    ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI*2); ctx.fill();
+    ctx.fillStyle = '#ffe040';
+    ctx.font = 'bold 14px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText('⚡', p.x, p.y);
+    ctx.restore();
+  }
+
+  function collides(a, b) {
+    return Math.abs(a.x - b.x) < (a.w/2 + b.w/2) - 8 &&
+           Math.abs(a.y - b.y) < (a.h/2 + b.h/2) - 6;
+  }
+
+  function collidesPickup(t, p) {
+    return Math.hypot(t.x - p.x, t.y - p.y) < p.r + 18;
+  }
+
+  function updateBatteryUI() {
+    const fill = document.getElementById('batteryFill');
+    fill.style.width = battery + '%';
+    if (battery > 50) fill.style.background = 'linear-gradient(to right, #5bc8f5, #2af)';
+    else if (battery > 25) fill.style.background = 'linear-gradient(to right, #c8a96e, #f5a623)';
+    else fill.style.background = 'linear-gradient(to right, #e05050, #c03030)';
+  }
+
+  function gameLoop() {
+    frame++;
+    ctx.clearRect(0, 0, W, H);
+    drawBackground();
+
+    roadLines.forEach(l => { l.x -= speed * 0.5; if (l.x < -4) l.x = W; });
+
+    const now = Date.now();
+    if (now - lastLaneMove > 180) {
+      if ((keys['ArrowUp'] || keys['w']) && truck.lane > 0) {
+        truck.lane--; lastLaneMove = now;
+      }
+      if ((keys['ArrowDown'] || keys['s']) && truck.lane < 2) {
+        truck.lane++; lastLaneMove = now;
+      }
+    }
+
+    truck.y += (LANES[truck.lane] - truck.y) * 0.18;
+
+    if (frame % Math.max(55, 90 - Math.floor(score/10)) === 0) spawnObstacle();
+    if (frame % 120 === 0) spawnPickup();
+
+    obstacles = obstacles.filter(o => {
+      o.x -= speed;
+      drawObstacle(o);
+      if (collides(truck, o)) { endGame(); return false; }
+      return o.x > -80;
+    });
+
+    pickups = pickups.filter(p => {
+      p.x -= speed * 0.8;
+      drawPickup(p);
+      if (collidesPickup(truck, p)) {
+        battery = Math.min(100, battery + 20);
+        score += 5;
+        updateBatteryUI();
+        return false;
+      }
+      return p.x > -40;
+    });
+
+    drawTruck(truck.x, truck.y);
+
+    if (frame % 60 === 0) {
+      battery = Math.max(0, battery - 1);
+      updateBatteryUI();
+      if (battery <= 0) { endGame(); return; }
+    }
+
+    if (frame % 10 === 0) {
+      score++;
+      speed = 3 + Math.floor(score / 30) * 0.4;
+      document.getElementById('scoreDisplay').textContent = score;
+      if (score > hiScore) {
+        hiScore = score;
+        document.getElementById('hiScoreDisplay').textContent = hiScore;
+      }
+    }
+
+    animFrame = requestAnimationFrame(gameLoop);
+  }
+
+  function startGame() {
+    score = 0; battery = 100; speed = 3; frame = 0;
+    truck.lane = 1; truck.y = LANES[1];
+    obstacles = []; pickups = [];
+    document.getElementById('scoreDisplay').textContent = '0';
+    updateBatteryUI();
+    document.getElementById('gameOverlay').style.display = 'none';
+    gameRunning = true;
+    gameLoop();
+  }
+
+  function endGame() {
+    gameRunning = false;
+    cancelAnimationFrame(animFrame);
+    document.getElementById('overlayTitle').textContent = battery <= 0 ? 'Out of Range' : 'Crash!';
+    document.getElementById('overlayMsg').textContent = 'You scored ' + score + ' miles. ' + (score >= hiScore && score > 0 ? '🏆 New record!' : 'Try again?');
+    document.getElementById('startBtn').textContent = 'TRY AGAIN';
+    document.getElementById('gameOverlay').style.display = 'flex';
+  }
+
+  document.getElementById('startBtn').addEventListener('click', startGame);
+</script>
+</body>
+</html>
